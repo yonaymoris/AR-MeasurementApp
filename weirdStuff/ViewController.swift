@@ -69,7 +69,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
         label.textColor = .black
-        label.backgroundColor = .black
+        label.backgroundColor = .white
         
         let topGutter : CGFloat = (self.navigationController?.navigationBar.frame.size.height)! + UIApplication.shared.statusBarFrame.height
         
