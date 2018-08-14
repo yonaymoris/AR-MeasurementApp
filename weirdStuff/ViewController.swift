@@ -72,15 +72,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let secondLocation = self.sceneView.projectPoint(SCNVector3(x: dot2.position.x,
                                                                    y: dot2.position.y,
                                                                    z: dot2.position.z))
-        
-        let linelen = sqrt(pow(abs(secondLocation.y-firstLocation.y),2)+pow(abs(secondLocation.x-firstLocation.x),2))
-        let si = abs(secondLocation.y-firstLocation.y)/linelen
-        let angle = Double(asin(si)) * (Double.pi/180)
-        
-        print("line: \(linelen), sin : \(si), angle: \(angle)")
+
+        var angle : Double = 0
+        if (firstLocation.y > secondLocation.y) {
+            angle = Double(atan2(secondLocation.y - firstLocation.y, secondLocation.x - firstLocation.x))
+        } else {
+            angle = Double(atan2(firstLocation.y - secondLocation.y, firstLocation.x - secondLocation.x))
+        }
+        print(angle)
+        //print("line: \(linelen), sin : \(si), angle: \(angle)")
 //        print("\(setlocation) \(self.navigationController?.navigationBar.frame.size.height)")
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 21))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 21))
         //label.transform = CGAffineTransform.identity
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
         label.textColor = .black
@@ -91,7 +94,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         label.center = CGPoint(x: Double(setlocation.x), y: Double(setlocation.y) +  Double(topGutter))
         label.textAlignment = .center
         label.text = "\(calculate(dot1 : dot1, dot2 : dot2)) cm"
-        label.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
+        if angle < -1 {
+            label.transform = CGAffineTransform(rotationAngle: CGFloat(angle + Double.pi))
+        } else {
+            label.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
+        }
         //label.transform = CGAffineTransform(rotationAngle: CGFloat(90*Double.pi/180))
         
         self.view.addSubview(label)
