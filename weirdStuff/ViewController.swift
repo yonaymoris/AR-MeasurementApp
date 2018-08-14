@@ -74,17 +74,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                                                                    z: dot2.position.z))
 
         var angle : Double = 0
-        if (firstLocation.y > secondLocation.y) {
-            angle = Double(atan2(secondLocation.y - firstLocation.y, secondLocation.x - firstLocation.x))
-        } else {
-            angle = Double(atan2(firstLocation.y - secondLocation.y, firstLocation.x - secondLocation.x))
-        }
-        print(angle)
-        //print("line: \(linelen), sin : \(si), angle: \(angle)")
-//        print("\(setlocation) \(self.navigationController?.navigationBar.frame.size.height)")
+        angle = (firstLocation.y > secondLocation.y) ? Double(atan2(secondLocation.y - firstLocation.y, secondLocation.x - firstLocation.x)) : Double(atan2(firstLocation.y - secondLocation.y, firstLocation.x - secondLocation.x))
+        //print(angle)
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 21))
-        //label.transform = CGAffineTransform.identity
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
         label.textColor = .black
         label.backgroundColor = .white
@@ -94,12 +87,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         label.center = CGPoint(x: Double(setlocation.x), y: Double(setlocation.y) +  Double(topGutter))
         label.textAlignment = .center
         label.text = "\(calculate(dot1 : dot1, dot2 : dot2)) cm"
-        if angle < -1 {
-            label.transform = CGAffineTransform(rotationAngle: CGFloat(angle + Double.pi))
-        } else {
-            label.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
-        }
-        //label.transform = CGAffineTransform(rotationAngle: CGFloat(90*Double.pi/180))
+        
+        label.transform = (angle < -1) ? CGAffineTransform(rotationAngle: CGFloat(angle + Double.pi)) : CGAffineTransform(rotationAngle: CGFloat(angle))
         
         self.view.addSubview(label)
         labels.append(label)
