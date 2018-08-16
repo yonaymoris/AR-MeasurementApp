@@ -60,7 +60,11 @@
                                 <action selector="stopPressed:" destination="BV1-FR-VrT" id="rsS-F3-egB"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="xhA-jS-q1M"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="xhA-jS-q1M">
+                            <connections>
+                                <action selector="refreshPressed:" destination="BV1-FR-VrT" id="ky2-be-yDi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>

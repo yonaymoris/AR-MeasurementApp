@@ -27,7 +27,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the view's delegate
         sceneView.delegate = self
-        //sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
     }
@@ -195,5 +195,42 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 self.placeLabel(dot1: dotNodes[i-2], dot2: dotNodes[i-1])
             }
         }
+    }
+    
+    @IBAction func refreshPressed(_ sender: Any) {
+        let configuration = ARWorldTrackingConfiguration()
+        
+        currentNodesNum = 1
+        startNode = nil
+        continueFlag = true
+        
+        if !dotNodes.isEmpty {
+            for dot in dotNodes {
+                dot.removeFromParentNode()
+            }
+        }
+        
+        if !lineNodes.isEmpty {
+            for line in lineNodes {
+                line.removeFromParentNode()
+            }
+        }
+        
+        if !labels.isEmpty {
+            for label in labels {
+                label.removeFromSuperview()
+            }
+        }
+    
+        
+        if line_node != nil {
+            line_node?.removeFromParentNode()
+        }
+        
+        dotNodes.removeAll()
+        labels.removeAll()
+        lineNodes.removeAll()
+        lengths.removeAll()
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
 }
